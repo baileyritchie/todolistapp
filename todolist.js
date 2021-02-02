@@ -33,9 +33,7 @@ class TodoList {
   }
 
   forEach(callback) {
-    for( let index = 0; index < this.size(); index ++)  {
-      callback(this.itemAt(index));
-    }
+    this.todos.forEach(callback);
   }
   add(todo) {
     if (!(todo instanceof Todo)) {
