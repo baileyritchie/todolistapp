@@ -1,4 +1,4 @@
-//adding new foreach instance method on todolist class
+//adding new filter instance method
 class Todo {
   static DONE_MARKER =  'X';
   static UNDONE_MARKER = ' ';
@@ -31,9 +31,41 @@ class TodoList {
     this.title = title;
     this.todos = [];
   }
-
+  findByTitle(title){
+    return this.filter((todo) => todo.getTitle()===title).first();
+  }
+  allDone() {
+    return this.filter((todos) => todos.isDone);
+  }
+  allNotDone() {
+    return this.filter((todos) => !todos.isDone);
+  }
+  markDone(title) {
+    let todo = this.findByTitle(title);
+    if (todo !== undefined)  {
+      todo.markDone();
+    }
+  }
+  markAllDone() { 
+    this.forEach((todo) => todo.markDone());
+  }
+  markAllUndone() {
+    this.forEach((todo) => todo.markUndone());
+  }
+  toArray() {
+    return this.todos.slice();
+  }
   forEach(callback) {
     this.todos.forEach(callback);
+  }
+  filter(callback) {
+    let newList =  new TodoList(this.title);
+    this.forEach((todo) => {
+      if (callback(todo)) {
+        newList.add(todo);
+      } 
+    })
+    return newList;
   }
   add(todo) {
     if (!(todo instanceof Todo)) {
